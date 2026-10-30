@@ -1,11 +1,10 @@
 import "./JourneyMap.css";
 import { DEFAULT_JOURNEY_PHOTOS } from "./journeyPhotos";
 
-function PolaroidStack({ photos = [], locationLabel, className = "" }) {
-  // Roles for the 3-card stack:
-  // Index 0 -> Top (center, fully seen)
-  // Index 1 -> Right
-  // Index 2 -> Left
+function PolaroidStack({ photos = [], locationLabel, className = "", single = false }) {
+  // Desktop: up to 3 cards fanned out
+  // Mobile: exactly 1 card
+  const displayPhotos = single ? photos.slice(0, 1) : photos.slice(0, 3);
   const roleClasses = [
     "polaroid-card--top",
     "polaroid-card--right",
@@ -14,13 +13,15 @@ function PolaroidStack({ photos = [], locationLabel, className = "" }) {
 
   return (
     <div
-      className={`polaroid-trigger-area ${className}`}
+      className={`polaroid-trigger-area ${className} ${single ? "polaroid-trigger-area--single" : ""}`}
       role="region"
-      aria-label={`${locationLabel} polaroid picture collection`}
+      aria-label={`${locationLabel} polaroid picture${single ? "" : " collection"}`}
     >
-      <div className="polaroid-stack">
-        {photos.slice(0, 3).map((photo, index) => {
-          const roleClass = roleClasses[index] || "polaroid-card--top";
+      <div className={`polaroid-stack ${single ? "polaroid-stack--single" : ""}`}>
+        {displayPhotos.map((photo, index) => {
+          const roleClass = single
+            ? "polaroid-card--single"
+            : roleClasses[index] || "polaroid-card--top";
 
           return (
             <div
@@ -34,6 +35,7 @@ function PolaroidStack({ photos = [], locationLabel, className = "" }) {
                     alt={photo.alt || photo.caption}
                     className="polaroid-img"
                     loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="polaroid-placeholder">
@@ -243,7 +245,7 @@ export default function JourneyMap({ photos = DEFAULT_JOURNEY_PHOTOS }) {
             className="mobile-location-title cinzel-decorative-black"
             textAnchor="start"
           >
-            Location 1
+            SMJK CHUNG LING
           </text>
           <g transform="translate(70, 125)" className="destination-node">
             <use href="#thick-rectangular-x-mob" />
@@ -256,7 +258,7 @@ export default function JourneyMap({ photos = DEFAULT_JOURNEY_PHOTOS }) {
             className="mobile-location-title cinzel-decorative-black"
             textAnchor="start"
           >
-            Location 2
+            MATRICULATION
           </text>
           <g transform="translate(70, 505)" className="destination-node">
             <use href="#thick-rectangular-x-mob" />
@@ -269,7 +271,7 @@ export default function JourneyMap({ photos = DEFAULT_JOURNEY_PHOTOS }) {
             className="mobile-location-title cinzel-decorative-black"
             textAnchor="start"
           >
-            Location 3
+            UNIVERSITI MALAYA
           </text>
           <g transform="translate(70, 885)" className="destination-node">
             <use href="#thick-rectangular-x-mob" />
@@ -289,24 +291,24 @@ export default function JourneyMap({ photos = DEFAULT_JOURNEY_PHOTOS }) {
           </g>
         </svg>
 
-        {/* Polaroid batches positioned to the right of the path, between the locations */}
-        {/* Batch 1: between Location 1 & Location 2 */}
+        {/* POLAROID PICTURES (MOBILE POCKETS: SINGLE POLAROID PER LOCATION) */}
         <PolaroidStack
-          locationLabel="Location 1"
+          single
+          locationLabel="SMJK Chung Ling"
           photos={resolvedPhotos.location1}
           className="polaroid-stack--loc-1"
         />
 
-        {/* Batch 2: between Location 2 & Location 3 */}
         <PolaroidStack
-          locationLabel="Location 2"
+          single
+          locationLabel="Kedah Matriculation College"
           photos={resolvedPhotos.location2}
           className="polaroid-stack--loc-2"
         />
 
-        {/* Batch 3: between Location 3 & Location 4 */}
         <PolaroidStack
-          locationLabel="Location 3"
+          single
+          locationLabel="Universiti Malaya: Software Engineering"
           photos={resolvedPhotos.location3}
           className="polaroid-stack--loc-3"
         />

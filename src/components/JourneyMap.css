@@ -15,6 +15,7 @@
   padding: 0 2rem clamp(2rem,3rem,4rem) 2rem;
   box-sizing: border-box;
   background-color: #ffffff;
+
 }
 
 /* Responsive stage container for SVG + Polaroid overlays */
@@ -69,7 +70,7 @@
 /* Straight, left-aligned location title for mobile map within screen */
 .mobile-location-title {
   font-family: "Cinzel Decorative", serif;
-  font-size: 26px;
+  font-size: var(--fs-500);
   font-weight: 900;
   letter-spacing: 1.5px;
   fill: #000000;
@@ -148,19 +149,19 @@
 /* Beside Location 1 (Right side) */
 .polaroid-stack--loc-1 {
   left: 74%;
-  top: 11%;
+  top: 9.5%;
 }
 
 /* Beside Location 2 (Left side) */
 .polaroid-stack--loc-2 {
   left: 25%;
-  top: 36%;
+  top: 34.5%;
 }
 
 /* Beside Location 3 (Right side) */
 .polaroid-stack--loc-3 {
   left: 74%;
-  top: 60%;
+  top: 58.5%;
 }
 
 /* Inner Polaroid Stack centered within the trigger area */
@@ -196,6 +197,20 @@
   box-sizing: border-box;
   text-align: left;
   font-family: "Josefin Sans", "Geist", sans-serif;
+}
+
+/* Single Polaroid Card */
+.polaroid-card--single {
+  z-index: 2;
+  transform: translate(0, 0) rotate(0deg);
+}
+
+.polaroid-trigger-area:hover .polaroid-card--single {
+  transform: translateY(-8px) scale(1.04) rotate(0deg);
+  z-index: 5;
+  box-shadow:
+    0 24px 42px -5px rgba(0, 0, 0, 0.28),
+    0 8px 16px -3px rgba(0, 0, 0, 0.12);
 }
 
 /* Default Stacking Layers (At Rest):
@@ -506,12 +521,15 @@
   .treasure-map-container {
     padding: 1.5rem 0.5rem 3rem 0.5rem;
     align-items: flex-start;
+    overflow-x: clip;
   }
   .treasure-map-stage--desktop {
     display: none;
   }
   .treasure-map-stage--mobile {
     display: block;
+    overflow-x: clip;
+    max-width: 500px;
   }
 
   /* Disable moving circle beacon on mobile */
@@ -519,85 +537,103 @@
     display: none !important;
   }
 
-  /* Remove photo captions on mobile */
-  .treasure-map-stage--mobile .polaroid-footer {
-    display: none;
+  /* Disable negative margin expansion on mobile to prevent viewport overflow */
+  .treasure-map-stage--mobile .polaroid-trigger-area::before,
+  .treasure-map-stage--mobile .polaroid-trigger-area:hover::before {
+    inset: 0;
   }
 
-  /* Mobile: Polaroid batches are to the right of the vertical path, shifted slightly upward */
-  /* Location 1 (Y=125) & Location 2 (Y=505): positioned slightly upward toward Location 1 */
+  /* Mobile: Single polaroid positions between milestones (raised slightly) */
   .treasure-map-stage--mobile .polaroid-stack--loc-1 {
     left: 60%;
-    top: 19.5%;
+    top: 17%;
   }
 
-  /* Location 2 (Y=505) & Location 3 (Y=885): positioned slightly upward toward Location 2 */
   .treasure-map-stage--mobile .polaroid-stack--loc-2 {
     left: 60%;
-    top: 46.5%;
+    top: 44%;
   }
 
-  /* Location 3 (Y=885) & Location 4 (Y=1265): positioned slightly upward toward Location 3 */
   .treasure-map-stage--mobile .polaroid-stack--loc-3 {
     left: 60%;
-    top: 73.8%;
+    top: 71%;
   }
 
-  /* Mobile trigger sizing & larger polaroids */
+  /* Mobile single polaroid sizing */
   .treasure-map-stage--mobile .polaroid-trigger-area {
-    width: clamp(220px, 58cqw, 320px);
-    height: clamp(170px, 44cqw, 240px);
+    width: clamp(130px, 34cqw, 180px);
+    height: clamp(160px, 42cqw, 220px);
+    display: flex;
+    pointer-events: auto;
   }
 
   .treasure-map-stage--mobile .polaroid-stack {
-    width: clamp(110px, 28cqw, 145px);
+    width: 100%;
+    aspect-ratio: 1 / 1.25;
   }
 
   .treasure-map-stage--mobile .polaroid-card {
-    padding: clamp(7px, 1.8cqw, 10px) clamp(7px, 1.8cqw, 10px) clamp(20px, 5cqw, 28px) clamp(7px, 1.8cqw, 10px);
+    padding: clamp(6px, 1.5cqw, 8px) clamp(6px, 1.5cqw, 8px) clamp(18px, 4cqw, 26px) clamp(6px, 1.5cqw, 8px);
+    box-shadow:
+      0 10px 20px -3px rgba(0, 0, 0, 0.16),
+      0 2px 6px -1px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .treasure-map-stage--mobile .polaroid-placeholder-title {
-    font-size: clamp(8px, 2cqw, 11px);
+  .treasure-map-stage--mobile .polaroid-stack--loc-1 .polaroid-card {
+    transform: rotate(2deg);
   }
 
-  .treasure-map-stage--mobile .polaroid-placeholder-hint {
-    font-size: clamp(7px, 1.8cqw, 10px);
+  .treasure-map-stage--mobile .polaroid-stack--loc-2 .polaroid-card {
+    transform: rotate(-2deg);
   }
 
-  .treasure-map-stage--mobile .polaroid-camera-icon {
-    width: clamp(22px, 5cqw, 30px);
-    height: clamp(22px, 5cqw, 30px);
+  .treasure-map-stage--mobile .polaroid-stack--loc-3 .polaroid-card {
+    transform: rotate(1.5deg);
   }
 
-  /* Mobile card fan-out: comfortable offset to stay inside right area */
-  .treasure-map-stage--mobile .polaroid-trigger-area:hover .polaroid-card--right {
-    transform: translate(58%, 3px) rotate(10deg) scale(1.02);
+  /* Gentle vertical lift on tap/hover without horizontal drift */
+  .treasure-map-stage--mobile .polaroid-trigger-area:hover .polaroid-card,
+  .treasure-map-stage--mobile .polaroid-trigger-area:active .polaroid-card {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow:
+      0 16px 28px -4px rgba(0, 0, 0, 0.22),
+      0 4px 10px -2px rgba(0, 0, 0, 0.1);
   }
 
-  .treasure-map-stage--mobile .polaroid-trigger-area:hover .polaroid-card--left {
-    transform: translate(-58%, -3px) rotate(-10deg) scale(1.02);
+  /* Mobile footer caption and date */
+  .treasure-map-stage--mobile .polaroid-footer {
+    display: flex;
+    margin-top: clamp(4px, 1cqw, 6px);
   }
 
-  .treasure-map-stage--mobile .polaroid-trigger-area:hover .polaroid-card--top {
-    transform: translate(0, -12px) scale(1.04) rotate(0deg);
+  .treasure-map-stage--mobile .polaroid-caption {
+    font-size: clamp(9px, 2.2cqw, 12px);
+    font-weight: 700;
   }
 
-  .curved-location-title {
-    font-size: var(--h1-font-size, 2em);
-    stroke-width: 7px;
+  .treasure-map-stage--mobile .polaroid-date {
+    font-size: clamp(8px, 1.8cqw, 10px);
   }
+
+  /* Restored journey map dashed track animation on mobile */
   .treasure-dashed-track {
     stroke-width: 6px;
+    animation: marchTreasureDashes 2s linear infinite;
+  }
+
+  .curved-location-title,
+  .mobile-location-title {
+    animation: subtleFloat 4s ease-in-out infinite alternate;
   }
 }
 
 @media (max-width: 480px) {
   .treasure-map-container {
-    padding: 1.25rem 0.25rem 2.5rem 0.25rem;
+    padding:0 0.25rem 2.5rem 0.25rem;
   }
   .mobile-location-title {
-    font-size: 22px;
+    font-size: var(--fs-500);
     letter-spacing: 1px;
     stroke-width: 5px;
   }

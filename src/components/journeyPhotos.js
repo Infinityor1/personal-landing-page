@@ -12,36 +12,35 @@
 //
 // Leave `src: ""` to display the vintage Polaroid instant film frame.
 // =========================================================================
-import CLHSClass from '../assets/CLHSClass.jpeg'
-import SPM from '../assets/SPM.png'
-import CLHSHarmonica from '../assets/CLHSHarmonica.jpg'
-import KMKGrad from '../assets/kmkGrad.jpg'
-import KMKHostel from '../assets/kmkHostel.jpg'
-import MUET from '../assets/muet.png'
-import KUAYUE from '../assets/Kuayue.JPG'
-import YLS from '../assets/Yaolanshou.jpg'
-import ArduinoTalk from '../assets/ArduinoTalkSpeaker.JPG'
-
+import CLHSClass from '../assets/CLHSClass.jpeg';
+import SPM from '../assets/SPM.png';
+import CLHSHarmonica from '../assets/CLHSHarmonica.jpg';
+import KMKGrad from '../assets/kmkGrad.jpg';
+import KMKHostel from '../assets/kmkHostel.jpg';
+import MUET from '../assets/muet.png';
+import KUAYUE from '../assets/Kuayue.JPG';
+import YLS from '../assets/Yaolanshou.jpg';
+import ArduinoTalk from '../assets/ArduinoTalkSpeaker.JPG';
 
 export const DEFAULT_JOURNEY_PHOTOS = {
   location1: [
     {
       id: "loc1-polaroid-1",
-      src: CLHSClass, // <-- Attach image here
+      src: CLHSClass,
       alt: "Location 1 - Memory 1",
       caption: "Classmates!",
       date: "2020",
     },
     {
       id: "loc1-polaroid-2",
-      src: SPM, // <-- Attach image here
+      src: SPM,
       alt: "Location 1 - Memory 2",
       caption: "SPM Certification",
       date: "2023",
     },
     {
       id: "loc1-polaroid-3",
-      src: CLHSHarmonica, // <-- Attach image here
+      src: CLHSHarmonica,
       alt: "Location 1 - Memory 3",
       caption: "Harmonica Club",
       date: "2019",
@@ -50,21 +49,21 @@ export const DEFAULT_JOURNEY_PHOTOS = {
   location2: [
     {
       id: "loc2-polaroid-1",
-      src: KMKGrad, // <-- Attach image here
+      src: KMKGrad,
       alt: "Location 2 - Memory 1",
       caption: "Graduation",
       date: "2024",
     },
     {
       id: "loc2-polaroid-2",
-      src: KMKHostel, // <-- Attach image here
+      src: KMKHostel,
       alt: "Location 2 - Memory 2",
       caption: "College Hostel",
       date: "2024",
     },
     {
       id: "loc2-polaroid-3",
-      src: MUET, // <-- Attach image here
+      src: MUET,
       alt: "Location 2 - Memory 3",
       caption: "MUET 5+",
       date: "2024",
@@ -73,21 +72,21 @@ export const DEFAULT_JOURNEY_PHOTOS = {
   location3: [
     {
       id: "loc3-polaroid-1",
-      src: ArduinoTalk, // <-- Attach image here
+      src: ArduinoTalk,
       alt: "Location 3 - Memory 1",
       caption: "Arduino Talk Speaker",
       date: "2026",
     },
     {
       id: "loc3-polaroid-2",
-      src: KUAYUE, // <-- Attach image here
+      src: KUAYUE,
       alt: "Location 3 - Memory 2",
       caption: "Concert Performer",
       date: "2026",
     },
     {
       id: "loc3-polaroid-3",
-      src: YLS, // <-- Attach image here
+      src: YLS,
       alt: "Location 3 - Memory 3",
       caption: "Songwriting",
       date: "2026",

@@ -420,12 +420,19 @@ text-shadow:1px 1px rgba(246, 0, 153,0.8),
   gap: 1.5rem;
   padding: 2.5rem 0 1rem 0;
 }
+@media (max-width:35em) {
+  .ventures-connect{
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3,1fr);
+  }
+}
 
 .connect-link {
   font-family: "Josefin Sans", "Geist", sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 1.5px;
+  text-align: center;
   text-transform: uppercase;
   color: #18181b;
   text-decoration: none;
@@ -454,7 +461,7 @@ text-shadow:1px 1px rgba(246, 0, 153,0.8),
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .portfolio-section {
-    padding: 5.5rem 1rem 3.5rem 1rem;
+    padding: 4.5rem 1rem 3.5rem 1rem;
   }
   .cards-grid {
     grid-template-columns: 1fr;

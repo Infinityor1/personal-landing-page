@@ -5,7 +5,7 @@ const MUSIC_HIGHLIGHTS = [
     id: "harmonica-ensemble",
     title: "Harmonica Ensemble & Soloist",
     description:
-      "President and Conductor of my high school harmonica band. Competitions, arrangements, conducting, leadership. All to continue the legacy.",
+      "President and Conductor of my high school's harmonica band. Competitions, arrangements, conducting, leadership. All to continue the legacy.",
     tags: [
       "Chromatic Harmonica",
       "Conducting",
@@ -99,7 +99,7 @@ export default function MusicSection() {
           <h3 className="music-feature-title">Campus Bands</h3>
           <p className="music-feature-desc">
             Getting into modern bands was the best choice of my life! Melding
-            together with the band in sync, feeling the heat of the stage.
+            together with the band in sync, feeling the heat of the stage. Part of the core effort to organise concerts and share our stories with the public.
           </p>
         </div>
 

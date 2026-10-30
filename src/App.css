@@ -1,5 +1,5 @@
 .section{
-  min-height: 100vh;
+  min-height: calc(100vh - 72px);
   width: 100%;
 }
 
@@ -16,10 +16,14 @@
 
 .hero{
   font-size: var(--fs-700, 2em);
-  height:6em;
-  line-height: 2em;
+  line-height: 3.5em;
+  min-height: 10.5em;
   white-space: pre;
 }
+@media (min-width:45em){
+  .hero{line-height: 2.5em;min-height:8em;}
+}
+
 .next{
   font-family: 'Cinzel Decorative';
   position: relative;
