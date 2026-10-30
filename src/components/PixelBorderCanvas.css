@@ -1,0 +1,25 @@
+/* ============================================================== */
+/* PIXEL BORDER CANVASES (Top & Bottom Seams of Tech Section)     */
+/* Seamless Streaming Pixels & Movie Tech Bug Glitch Effects      */
+/* ============================================================== */
+
+.pixel-border-canvas {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  pointer-events: none;
+  z-index: 15;
+  display: block;
+}
+
+/* Above the top border: baseline Y=45 lines up flush with top seam */
+.pixel-border-canvas--top {
+  top: -45px;
+}
+
+/* Below the bottom border: baseline Y=45 lines up flush with bottom seam */
+.pixel-border-canvas--bottom {
+  bottom: -45px;
+}
+

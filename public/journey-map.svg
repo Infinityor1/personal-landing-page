@@ -1,0 +1,173 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 0 1000 1280"
+  width="100%"
+  height="100%"
+  role="img"
+  aria-label="Education Journey Map: SMJK Chung Ling, Matriculation, Universiti Malaya, Next stop..."
+>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&amp;display=swap');
+
+    :root {
+      --map-track: #000000;
+      --map-text: #000000;
+      --map-halo: #ffffff;
+      --map-node: #000000;
+      --map-beacon: #000000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --map-track: #f0f6fc;
+        --map-text: #f0f6fc;
+        --map-halo: #0d1117;
+        --map-node: #f0f6fc;
+        --map-beacon: #f0f6fc;
+      }
+    }
+
+    .treasure-dashed-track {
+      stroke: var(--map-track, #000000);
+      stroke-width: 8px;
+      stroke-linecap: round;
+      stroke-dasharray: 22 22;
+      animation: marchTreasureDashes 2s linear infinite;
+      shape-rendering: geometricPrecision;
+    }
+
+    @keyframes marchTreasureDashes {
+      from {
+        stroke-dashoffset: 44;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .curved-location-title {
+      font-family: "Cinzel Decorative", "Cinzel", "Georgia", "Palatino Linotype", serif;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      fill: var(--map-text, #000000);
+      text-anchor: middle;
+      stroke: var(--map-halo, #ffffff);
+      stroke-width: 8px;
+      paint-order: stroke fill;
+      animation: subtleFloat 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes subtleFloat {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-4px);
+      }
+    }
+
+    .destination-node {
+      fill: var(--map-node, #000000);
+    }
+
+    .beacon-dot {
+      fill: var(--map-beacon, #000000);
+    }
+
+    .beacon-pulse {
+      fill: var(--map-beacon, #000000);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .treasure-dashed-track {
+        animation: none;
+      }
+      .curved-location-title {
+        animation: none;
+      }
+      .treasure-traveler {
+        display: none;
+      }
+    }
+  </style>
+
+  <defs>
+    <!-- Arcs for curved location text labels -->
+    <path id="arc-loc-1" d="M 30 105 Q 240 35 450 105" fill="none" />
+    <path id="arc-loc-2" d="M 550 425 Q 760 355 970 425" fill="none" />
+    <path id="arc-loc-3" d="M 30 715 Q 240 645 450 715" fill="none" />
+    <path id="arc-loc-4" d="M 290 1195 Q 500 1165 710 1195" fill="none" />
+
+    <!-- Bold rectangular 'X' mark symbol -->
+    <g id="thick-rectangular-x">
+      <rect x="-27" y="-7.5" width="54" height="15" transform="rotate(45)" />
+      <rect x="-27" y="-7.5" width="54" height="15" transform="rotate(-45)" />
+    </g>
+  </defs>
+
+  <!-- Fat dashed treasure map path with fallback SMIL animation -->
+  <path
+    d="M 240 160 C 520 160, 760 280, 760 480 C 760 620, 360 660, 240 780 C 120 900, 500 970, 500 1100"
+    fill="none"
+    class="treasure-dashed-track"
+  >
+    <animate attributeName="stroke-dashoffset" from="44" to="0" dur="2s" repeatCount="indefinite" />
+  </path>
+
+  <!-- Traveling beacon along the dashed trail -->
+  <g class="treasure-traveler">
+    <animateMotion
+      path="M 240 160 C 520 160, 760 280, 760 480 C 760 620, 360 660, 240 780 C 120 900, 500 970, 500 1100"
+      dur="10s"
+      repeatCount="indefinite"
+    />
+    <circle cx="0" cy="0" r="14" class="beacon-pulse" opacity="0.3">
+      <animate attributeName="r" values="8;16;8" dur="2s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.4;0.05;0.4" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="0" cy="0" r="8" class="beacon-dot" />
+  </g>
+
+  <!-- Location 1: SMJK Chung Ling -->
+  <g transform="translate(240, 160)" class="destination-node">
+    <use href="#thick-rectangular-x" xlink:href="#thick-rectangular-x" />
+  </g>
+  <text class="curved-location-title">
+    <textPath href="#arc-loc-1" xlink:href="#arc-loc-1" startOffset="50%" textAnchor="middle">
+      SMJK Chung Ling
+    </textPath>
+  </text>
+
+  <!-- Location 2: Matriculation -->
+  <g transform="translate(760, 480)" class="destination-node">
+    <use href="#thick-rectangular-x" xlink:href="#thick-rectangular-x" />
+  </g>
+  <text class="curved-location-title">
+    <textPath href="#arc-loc-2" xlink:href="#arc-loc-2" startOffset="50%" textAnchor="middle">
+      Matriculation
+    </textPath>
+  </text>
+
+  <!-- Location 3: Universiti Malaya -->
+  <g transform="translate(240, 780)" class="destination-node">
+    <use href="#thick-rectangular-x" xlink:href="#thick-rectangular-x" />
+  </g>
+  <text class="curved-location-title">
+    <textPath href="#arc-loc-3" xlink:href="#arc-loc-3" startOffset="50%" textAnchor="middle">
+      Universiti Malaya
+    </textPath>
+  </text>
+
+  <!-- Location 4: Next stop... -->
+  <g transform="translate(500, 1100)" class="destination-node">
+    <use href="#thick-rectangular-x" xlink:href="#thick-rectangular-x" />
+  </g>
+  <text class="curved-location-title">
+    <textPath href="#arc-loc-4" xlink:href="#arc-loc-4" startOffset="50%" textAnchor="middle">
+      Next stop...
+    </textPath>
+  </text>
+</svg>
+

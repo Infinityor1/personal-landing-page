@@ -1,0 +1,628 @@
+/* ============================================================== */
+/* MINIMALIST BLACK & WHITE TREASURE MAP TEXT ANIMATION          */
+/* ENLARGED SIZE & TYPOGRAPHY                                    */
+/* ============================================================== */
+
+.treasure-map-container {
+  width: 100%;
+  max-width: 1350px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem clamp(2rem,3rem,4rem) 2rem;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+/* Responsive stage container for SVG + Polaroid overlays */
+.treasure-map-stage {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  container-type: inline-size;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.treasure-map-stage--desktop {
+  display: block;
+  max-width: 1000px;
+}
+
+.treasure-map-stage--mobile {
+  display: none;
+  max-width: 500px;
+}
+
+.treasure-map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  overflow: visible;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Extra bold dashes like an authentic large treasure map */
+.treasure-dashed-track {
+  stroke: #000000;
+  stroke-width: 8px;
+  stroke-linecap: round;
+  stroke-dasharray: 22 22;
+  animation: marchTreasureDashes 2s linear infinite;
+  shape-rendering: geometricPrecision;
+}
+
+@keyframes marchTreasureDashes {
+  from {
+    stroke-dashoffset: 44;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Straight, left-aligned location title for mobile map within screen */
+.mobile-location-title {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  fill: #000000;
+  text-anchor: start;
+  pointer-events: none;
+  stroke: #ffffff;
+  stroke-width: 6px;
+  paint-order: stroke fill;
+}
+
+/* Curved text titles matching h1 size */
+.curved-location-title {
+  font-family: "Cinzel Decorative", serif;
+  font-size: var(--h1-font-size, 2em);
+  font-weight: 900;
+  letter-spacing: 2px;
+  fill: #000000;
+  text-anchor: middle;
+  pointer-events: none;
+  /* Thick white halo stroke so text cuts cleanly through the dashes */
+  stroke: #ffffff;
+  stroke-width: 8px;
+  paint-order: stroke fill;
+  animation: subtleFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes subtleFloat {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Waypoint 'X' nodes */
+.destination-node {
+  pointer-events: none;
+}
+
+/* Traveling dot indicator */
+.treasure-traveler {
+  pointer-events: none;
+}
+
+/* ============================================================== */
+/* POLAROID PICTURES (Batches of 3 Beside Locations 1-3)         */
+/* ============================================================== */
+
+/* Fixed, stationary trigger area to eliminate hover staggering */
+.polaroid-trigger-area {
+  position: absolute;
+  width: clamp(260px, 36cqw, 380px);
+  height: clamp(200px, 28cqw, 300px);
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 5;
+}
+
+/* Invisible hit-test area that expands on hover to cover the full fanned-out span */
+.polaroid-trigger-area::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.polaroid-trigger-area:hover::before {
+  /* Expands to seamlessly envelope the fanned-out cards and spaces between them */
+  inset: -30px -35% -30px -35%;
+}
+
+/* Beside Location 1 (Right side) */
+.polaroid-stack--loc-1 {
+  left: 74%;
+  top: 11%;
+}
+
+/* Beside Location 2 (Left side) */
+.polaroid-stack--loc-2 {
+  left: 25%;
+  top: 36%;
+}
+
+/* Beside Location 3 (Right side) */
+.polaroid-stack--loc-3 {
+  left: 74%;
+  top: 60%;
+}
+
+/* Inner Polaroid Stack centered within the trigger area */
+.polaroid-stack {
+  position: relative;
+  width: clamp(140px, 20cqw, 220px);
+  aspect-ratio: 1 / 1.22;
+  user-select: none;
+  pointer-events: none; /* Cards move freely without disrupting the trigger area hit detection */
+}
+
+/* Individual Polaroid Card with Authentic White Borders & Wide Bottom Chin */
+.polaroid-card {
+  position: absolute;
+  inset: 0;
+  background-color: #ffffff;
+  /* Iconic Polaroid borders: even sides & top, distinctively tall bottom chin */
+  padding: clamp(8px, 1.1cqw, 13px) clamp(8px, 1.1cqw, 13px) clamp(28px, 3.8cqw, 44px) clamp(8px, 1.1cqw, 13px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  box-shadow:
+    0 10px 24px -4px rgba(0, 0, 0, 0.16),
+    0 2px 6px -1px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s ease,
+    z-index 0s 0.1s;
+  box-sizing: border-box;
+  text-align: left;
+  font-family: "Josefin Sans", "Geist", sans-serif;
+}
+
+/* Default Stacking Layers (At Rest):
+   - Top image is fully seen (centered)
+   - Left and Right images are seen around half */
+.polaroid-card--top {
+  z-index: 3;
+  transform: translate(0, 0) rotate(0deg);
+}
+
+.polaroid-card--right {
+  z-index: 2;
+  transform: translate(38%, 10%) rotate(7deg);
+}
+
+.polaroid-card--left {
+  z-index: 1;
+  transform: translate(-38%, -10%) rotate(-7deg);
+}
+
+/* ============================================================== */
+/* BATCH HOVER ANIMATION: FAN OUT TO CLEARLY SEE EACH IMAGE       */
+/* Triggered smoothly by the stationary .polaroid-trigger-area    */
+/* ============================================================== */
+
+.polaroid-trigger-area:hover .polaroid-card--top {
+  transform: translate(0, -20px) scale(1.05) rotate(0deg);
+  z-index: 5;
+  box-shadow:
+    0 24px 42px -5px rgba(0, 0, 0, 0.28),
+    0 8px 16px -3px rgba(0, 0, 0, 0.12);
+}
+
+.polaroid-trigger-area:hover .polaroid-card--right {
+  /* Spread outward to the right so the image is fully uncovered */
+  transform: translate(88%, 4px) rotate(13deg) scale(1.02);
+  z-index: 4;
+  box-shadow:
+    0 18px 32px -4px rgba(0, 0, 0, 0.24),
+    0 6px 12px -2px rgba(0, 0, 0, 0.1);
+}
+
+.polaroid-trigger-area:hover .polaroid-card--left {
+  /* Spread outward to the left so the image is fully uncovered */
+  transform: translate(-88%, -4px) rotate(-13deg) scale(1.02);
+  z-index: 4;
+  box-shadow:
+    0 18px 32px -4px rgba(0, 0, 0, 0.24),
+    0 6px 12px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Square 1:1 Polaroid Photo Frame */
+.polaroid-frame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #141416;
+  overflow: hidden;
+  position: relative;
+  border-radius: 1px;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.polaroid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Vintage Polaroid Instant Film Placeholder */
+.polaroid-placeholder {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #232328 0%, #111114 100%);
+  color: #a1a1aa;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(3px, 0.6cqw, 6px);
+  box-sizing: border-box;
+}
+
+/* Iconic Polaroid Rainbow Stripe */
+.polaroid-rainbow-bar {
+  display: flex;
+  width: 100%;
+  height: 3px;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.polaroid-rainbow-bar span {
+  flex: 1;
+  height: 100%;
+}
+
+.stripe-red { background-color: #ef4444; }
+.stripe-orange { background-color: #f97316; }
+.stripe-yellow { background-color: #eab308; }
+.stripe-green { background-color: #22c55e; }
+.stripe-blue { background-color: #06b6d4; }
+
+.polaroid-placeholder-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.polaroid-camera-icon {
+  stroke: #e4e4e7;
+  opacity: 0.9;
+  width: clamp(20px, 2.8cqw, 32px);
+  height: clamp(20px, 2.8cqw, 32px);
+}
+
+.polaroid-placeholder-title {
+  font-size: clamp(8px, 1.1cqw, 12px);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  color: #f4f4f5;
+  font-family: "Geist", sans-serif;
+}
+
+.polaroid-placeholder-hint {
+  font-size: clamp(7px, 0.95cqw, 10px);
+  letter-spacing: 0.5px;
+  color: #fbbf24;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.polaroid-placeholder-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(6px, 0.85cqw, 9px);
+  font-family: ui-monospace, monospace;
+  letter-spacing: 1px;
+  color: #71717a;
+  text-transform: uppercase;
+}
+
+/* Wide Polaroid Bottom Chin for Hand-Written / Marker Caption */
+.polaroid-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: clamp(6px, 0.9cqw, 10px);
+  line-height: 1.25;
+  gap: 6px;
+}
+
+.polaroid-caption {
+  font-size: clamp(10px, 1.3cqw, 14px);
+  font-weight: 700;
+  color: #1c1917;
+  letter-spacing: 0.3px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  line-height: 1.25;
+  flex: 1;
+  min-width: 0;
+}
+
+.polaroid-date {
+  font-size: clamp(8px, 1cqw, 11px);
+  color: #78716c;
+  font-family: ui-monospace, monospace;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ============================================================== */
+/* LARGE DESKTOP & WIDE MONITORS (>= 1200px and >= 1440px)       */
+/* Generously enlarged Polaroid batches for spacious displays     */
+/* ============================================================== */
+
+@media (min-width: 1200px) {
+  .treasure-map-container {
+    max-width: 1440px;
+  }
+
+  .treasure-map-stage--desktop {
+    max-width: 1100px;
+  }
+
+  .polaroid-trigger-area {
+    width: clamp(340px, 38cqw, 440px);
+    height: clamp(260px, 30cqw, 350px);
+  }
+
+  .polaroid-stack {
+    width: clamp(190px, 22cqw, 250px);
+  }
+
+  .polaroid-card {
+    padding: 11px 11px 40px 11px;
+  }
+
+  .polaroid-caption {
+    font-size: 14px;
+  }
+
+  .polaroid-date {
+    font-size: 11px;
+  }
+
+  .polaroid-camera-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .polaroid-placeholder-title {
+    font-size: 12px;
+  }
+
+  .polaroid-placeholder-hint {
+    font-size: 10px;
+  }
+
+  .polaroid-placeholder-bottom {
+    font-size: 9px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .treasure-map-container {
+    max-width: 1600px;
+  }
+
+  .treasure-map-stage--desktop {
+    max-width: 1200px;
+  }
+
+  .polaroid-trigger-area {
+    width: clamp(400px, 40cqw, 500px);
+    height: clamp(310px, 33cqw, 400px);
+  }
+
+  .polaroid-stack {
+    width: clamp(230px, 24cqw, 285px);
+  }
+
+  .polaroid-card {
+    padding: 13px 13px 46px 13px;
+    box-shadow:
+      0 14px 32px -4px rgba(0, 0, 0, 0.18),
+      0 4px 10px -2px rgba(0, 0, 0, 0.08);
+  }
+
+  .polaroid-caption {
+    font-size: 16px;
+    letter-spacing: 0.3px;
+  }
+
+  .polaroid-date {
+    font-size: 12px;
+  }
+
+  .polaroid-camera-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .polaroid-placeholder-title {
+    font-size: 13px;
+  }
+
+  .polaroid-placeholder-hint {
+    font-size: 11px;
+  }
+
+  .polaroid-placeholder-bottom {
+    font-size: 10px;
+  }
+
+  .polaroid-trigger-area:hover .polaroid-card--top {
+    transform: translate(0, -22px) scale(1.06) rotate(0deg);
+  }
+
+  .polaroid-trigger-area:hover .polaroid-card--right {
+    transform: translate(88%, 5px) rotate(14deg) scale(1.03);
+  }
+
+  .polaroid-trigger-area:hover .polaroid-card--left {
+    transform: translate(-88%, -5px) rotate(-14deg) scale(1.03);
+  }
+}
+
+/* Responsive typography and dashes */
+@media (max-width: 1024px) {
+  .curved-location-title {
+    font-size: var(--h1-font-size, 2em);
+  }
+  .treasure-dashed-track {
+    stroke-width: 7px;
+  }
+}
+
+@media (max-width: 768px) {
+  .treasure-map-container {
+    padding: 1.5rem 0.5rem 3rem 0.5rem;
+    align-items: flex-start;
+  }
+  .treasure-map-stage--desktop {
+    display: none;
+  }
+  .treasure-map-stage--mobile {
+    display: block;
+  }
+
+  /* Disable moving circle beacon on mobile */
+  .treasure-traveler {
+    display: none !important;
+  }
+
+  /* Remove photo captions on mobile */
+  .treasure-map-stage--mobile .polaroid-footer {
+    display: none;
+  }
+
+  /* Mobile: Polaroid batches are to the right of the vertical path, shifted slightly upward */
+  /* Location 1 (Y=125) & Location 2 (Y=505): positioned slightly upward toward Location 1 */
+  .treasure-map-stage--mobile .polaroid-stack--loc-1 {
+    left: 60%;
+    top: 19.5%;
+  }
+
+  /* Location 2 (Y=505) & Location 3 (Y=885): positioned slightly upward toward Location 2 */
+  .treasure-map-stage--mobile .polaroid-stack--loc-2 {
+    left: 60%;
+    top: 46.5%;
+  }
+
+  /* Location 3 (Y=885) & Location 4 (Y=1265): positioned slightly upward toward Location 3 */
+  .treasure-map-stage--mobile .polaroid-stack--loc-3 {
+    left: 60%;
+    top: 73.8%;
+  }
+
+  /* Mobile trigger sizing & larger polaroids */
+  .treasure-map-stage--mobile .polaroid-trigger-area {
+    width: clamp(220px, 58cqw, 320px);
+    height: clamp(170px, 44cqw, 240px);
+  }
+
+  .treasure-map-stage--mobile .polaroid-stack {
+    width: clamp(110px, 28cqw, 145px);
+  }
+
+  .treasure-map-stage--mobile .polaroid-card {
+    padding: clamp(7px, 1.8cqw, 10px) clamp(7px, 1.8cqw, 10px) clamp(20px, 5cqw, 28px) clamp(7px, 1.8cqw, 10px);
+  }
+
+  .treasure-map-stage--mobile .polaroid-placeholder-title {
+    font-size: clamp(8px, 2cqw, 11px);
+  }
+
+  .treasure-map-stage--mobile .polaroid-placeholder-hint {
+    font-size: clamp(7px, 1.8cqw, 10px);
+  }
+
+  .treasure-map-stage--mobile .polaroid-camera-icon {
+    width: clamp(22px, 5cqw, 30px);
+    height: clamp(22px, 5cqw, 30px);
+  }
+
+  /* Mobile card fan-out: comfortable offset to stay inside right area */
+  .treasure-map-stage--mobile .polaroid-trigger-area:hover .polaroid-card--right {
+    transform: translate(58%, 3px) rotate(10deg) scale(1.02);
+  }
+
+  .treasure-map-stage--mobile .polaroid-trigger-area:hover .polaroid-card--left {
+    transform: translate(-58%, -3px) rotate(-10deg) scale(1.02);
+  }
+
+  .treasure-map-stage--mobile .polaroid-trigger-area:hover .polaroid-card--top {
+    transform: translate(0, -12px) scale(1.04) rotate(0deg);
+  }
+
+  .curved-location-title {
+    font-size: var(--h1-font-size, 2em);
+    stroke-width: 7px;
+  }
+  .treasure-dashed-track {
+    stroke-width: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .treasure-map-container {
+    padding: 1.25rem 0.25rem 2.5rem 0.25rem;
+  }
+  .mobile-location-title {
+    font-size: 22px;
+    letter-spacing: 1px;
+    stroke-width: 5px;
+  }
+  .curved-location-title {
+    font-size: var(--h1-font-size, 2em);
+    letter-spacing: 1px;
+    stroke-width: 6px;
+  }
+  .treasure-dashed-track {
+    stroke-width: 5px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .treasure-dashed-track {
+    animation: none !important;
+  }
+  .treasure-traveler {
+    display: none;
+  }
+  .curved-location-title {
+    animation: none !important;
+  }
+  .polaroid-card {
+    transition: none !important;
+  }
+}

@@ -1,13 +1,21 @@
-
-#center {
-  
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+.section{
+  min-height: 100vh;
+  width: 100%;
 }
 
+.map-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #000000;
+  box-sizing: border-box;
+  scroll-margin-top: 72px;
+}
+
+
 .hero{
+  font-size: var(--fs-700, 2em);
   height:6em;
   line-height: 2em;
   white-space: pre;
@@ -20,38 +28,61 @@
   
 }
 .next button{
+  font-size: var(--fs-600,2em);
    background:black;
    position: relative;
   border-radius: 25px;
   border:none;
-  padding:.5rem;
+  padding:1rem;
   color:white;
   z-index:10;
-  
-  box-shadow: 0px 3px 0px 1px grey;
+  margin-bottom:2em;
+  box-shadow: 0px 8px 0px 1px grey;
 }
 .next svg{
   position: absolute;
   left:50%;
-  top:50%;
+  top:30%;
   aspect-ratio: 1;
-  width:2em;
+  width:4em;
   z-index:1;
   translate:-50% -50%;
-  scale:1;
+  scale:0.2;
   rotate:0deg;
+  pointer-events: none;
 }
-.next button:hover +svg {
+.next svg.enlarge {
   animation: enlarge 300ms ease-out forwards, spin 3s 300ms infinite linear;
 }
+.next svg.shrink {
+  animation: shrink 300ms ease-in forwards, spin 3s linear infinite;
+}
 @keyframes enlarge {
+  from {
+    scale: 0.2;
+  }
   to {
     scale:5;
+  }
+}
+@keyframes shrink {
+  from {
+    scale: 5;
+  }
+  to {
+    scale:.2;
   }
 }
 @keyframes spin {
   to {
     rotate:360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .next svg.enlarge,
+  .next svg.shrink {
+    animation: none;
   }
 }
 
@@ -82,3 +113,37 @@
 @keyframes caret {
 	50% { color: transparent }
 } */
+
+/* Footer */
+.portfolio-footer {
+  background-color: #09090b;
+  width:100%;
+  color: #a1a1aa;
+  padding: 3.5rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: "Josefin Sans", "Geist", sans-serif;
+}
+
+.portfolio-footer-inner {
+  width:100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.footer-brand {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
+.footer-copyright {
+  font-size: 0.88rem;
+  color: #71717a;
+  letter-spacing: 0.5px;
+}

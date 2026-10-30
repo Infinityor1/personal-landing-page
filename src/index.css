@@ -17,8 +17,6 @@ body {
     /*default is 1.4(quite small)*/
     min-height: 100vh;
     /*prevent short pages from becoming an issue*/
-    display: grid;
-    grid-template-rows: min-content 1fr;
 }
 
 img, picture {
@@ -163,6 +161,7 @@ body {
     font-size: var(--fs-200);
 }
 
+
 .flex {
     display: flex;
     gap: var(--gap, 1rem);
@@ -194,12 +193,16 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   background-color: #ffffff;
 }
+html {
+  min-height: 100%;
+}
+body {
+  min-height: 100vh;
+}
 #root {
-  width: 1126px;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -261,3 +264,7 @@ h2 {
 .flow>*:where(:not(:first-child)) {
             margin-top: var(--flow-space, 1rem);
         }
+
+.header{
+    font-size:var(--fs-700,2em);
+}

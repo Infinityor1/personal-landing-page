@@ -1,0 +1,246 @@
+/* ============================================================== */
+/* FIXED NAVIGATION BAR                                           */
+/* Minimalist Glassmorphism with Black & White Typography         */
+/* ============================================================== */
+
+.navbar-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-header--scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-container {
+  max-width: 1350px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Brand / Logo Button */
+.navbar-brand {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  color: #000000;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-brand:hover {
+  opacity: 0.75;
+  transform: translateY(-1px);
+}
+
+/* Desktop Nav Items */
+.navbar-nav--desktop {
+  display: block;
+}
+
+.navbar-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+}
+
+.navbar-item {
+  position: relative;
+}
+
+.navbar-link {
+  background: none;
+  border: none;
+  padding: 0.5rem 0.25rem;
+  cursor: pointer;
+  font-family: "Josefin Sans", "Geist", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #71717a;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.navbar-link:hover {
+  color: #000000;
+}
+
+.navbar-link--active {
+  color: #000000;
+  font-weight: 700;
+}
+
+/* Gold/Black Indicator Underline */
+.navbar-link-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #000000;
+  border-radius: 1px;
+  animation: slideIndicator 0.25s ease-out forwards;
+}
+
+@keyframes slideIndicator {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/* Hamburger Toggle Button (Mobile) */
+.navbar-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1002;
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 2px;
+  background-color: #000000;
+  border-radius: 1px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.navbar-hamburger--open .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.navbar-hamburger--open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-hamburger--open .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Drawer */
+.navbar-mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 2rem 2rem 2rem;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  z-index: 999;
+}
+
+.navbar-mobile-drawer--open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.navbar-mobile-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.navbar-mobile-link {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.navbar-mobile-num {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  font-weight: 500;
+}
+
+.navbar-mobile-text {
+  font-family: "Josefin Sans", "Geist", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #27272a;
+  transition: color 0.2s ease;
+}
+
+.navbar-mobile-link:hover .navbar-mobile-text,
+.navbar-mobile-link--active .navbar-mobile-text {
+  color: #000000;
+  font-weight: 700;
+}
+
+.navbar-mobile-link--active .navbar-mobile-num {
+  color: #fbbf24;
+}
+
+/* Responsive Breakpoint */
+@media (max-width: 768px) {
+  .navbar-nav--desktop {
+    display: none;
+  }
+  .navbar-hamburger {
+    display: flex;
+  }
+  .navbar-mobile-drawer {
+    display: block;
+  }
+  .navbar-container {
+    padding: 0 1.25rem;
+  }
+}
+
