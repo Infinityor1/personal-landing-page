@@ -131,6 +131,9 @@ export default function PixelBorderCanvas({ position = "top" }) {
       }
 
       // 3. Update & Draw Dissipating Pixel Particles
+      const FADE_MARGIN_Y = 32; // Fade out over the final 32px before the vertical edge
+      const FADE_MARGIN_X = 24; // Fade out over 24px before left/right edges
+
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
 
@@ -139,15 +142,35 @@ export default function PixelBorderCanvas({ position = "top" }) {
         p.y += p.vy;
         p.alpha -= p.decay;
 
-        // Dissipation: shrink pixel size when alpha drops below 0.35
+        // Check boundary limits - remove if completely off canvas or fully decayed
         let currentSize = p.size;
-        if (p.alpha < 0.35 && currentSize > 1) {
+        const distTop = p.y;
+        const distBottom = height - (p.y + currentSize);
+        const distLeft = p.x;
+        const distRight = width - (p.x + currentSize);
+
+        if (distTop <= 0 || distBottom <= 0 || distLeft <= 0 || distRight <= 0 || p.alpha <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        // Distance-based edge fade zones with smoothstep easing
+        const normY = Math.min(1, Math.min(distTop, distBottom) / FADE_MARGIN_Y);
+        const edgeFactorY = normY * normY * (3 - 2 * normY);
+
+        const normX = Math.min(1, Math.min(distLeft, distRight) / FADE_MARGIN_X);
+        const edgeFactorX = normX * normX * (3 - 2 * normX);
+
+        const edgeFade = edgeFactorY * edgeFactorX;
+        let drawAlpha = Math.max(0, p.alpha) * edgeFade;
+
+        // Dissipation: shrink pixel size when visual alpha drops below 0.35
+        if (drawAlpha < 0.35 && currentSize > 1) {
           currentSize -= 1;
         }
 
-        // Draw particle if still alive
-        if (p.alpha > 0) {
-          let drawAlpha = Math.max(0, p.alpha);
+        // Draw particle if still visibly alive
+        if (drawAlpha > 0.005) {
           if (p.flicker && Math.random() < 0.25) {
             drawAlpha *= 0.5; // Digital flicker
           }

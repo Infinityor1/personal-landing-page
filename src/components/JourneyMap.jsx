@@ -99,7 +99,7 @@ export default function JourneyMap({ photos = DEFAULT_JOURNEY_PHOTOS }) {
 
   // Desktop smooth serpentine path
   const desktopMasterPath =
-    "M 240 160 C 520 160, 760 280, 760 480 C 760 620, 360 660, 240 780 C 120 900, 500 970, 500 1100";
+    "M 240 160 C 520 160, 760 280, 760 480 C 760 620, 360 730, 240 780 C 120 900, 500 970, 500 1100";
 
   // Mobile completely vertical path along the left side
   const mobileVerticalPath = "M 70 125 L 70 1265";
@@ -167,7 +167,7 @@ export default function JourneyMap({ photos = DEFAULT_JOURNEY_PHOTOS }) {
           </g>
           <text className="curved-location-title cinzel-decorative-black">
             <textPath href="#arc-loc-2" startOffset="50%" textAnchor="middle">
-              Matriculation 
+              Matriculation
             </textPath>
           </text>
 

@@ -76,9 +76,6 @@
   fill: #000000;
   text-anchor: start;
   pointer-events: none;
-  stroke: #ffffff;
-  stroke-width: 6px;
-  paint-order: stroke fill;
 }
 
 /* Curved text titles matching h1 size */
@@ -90,10 +87,6 @@
   fill: #000000;
   text-anchor: middle;
   pointer-events: none;
-  /* Thick white halo stroke so text cuts cleanly through the dashes */
-  stroke: #ffffff;
-  stroke-width: 8px;
-  paint-order: stroke fill;
   animation: subtleFloat 4s ease-in-out infinite alternate;
 }
 
@@ -635,12 +628,10 @@
   .mobile-location-title {
     font-size: var(--fs-500);
     letter-spacing: 1px;
-    stroke-width: 5px;
   }
   .curved-location-title {
     font-size: var(--h1-font-size, 2em);
     letter-spacing: 1px;
-    stroke-width: 6px;
   }
   .treasure-dashed-track {
     stroke-width: 5px;

@@ -53,9 +53,6 @@
       letter-spacing: 2px;
       fill: var(--map-text, #000000);
       text-anchor: middle;
-      stroke: var(--map-halo, #ffffff);
-      stroke-width: 8px;
-      paint-order: stroke fill;
       animation: subtleFloat 4s ease-in-out infinite alternate;
     }
 
@@ -109,7 +106,7 @@
 
   <!-- Fat dashed treasure map path with fallback SMIL animation -->
   <path
-    d="M 240 160 C 520 160, 760 280, 760 480 C 760 620, 360 660, 240 780 C 120 900, 500 970, 500 1100"
+    d="M 240 160 C 520 160, 760 280, 760 480 C 760 620, 360 730, 240 780 C 120 900, 500 970, 500 1100"
     fill="none"
     class="treasure-dashed-track"
   >
@@ -119,7 +116,7 @@
   <!-- Traveling beacon along the dashed trail -->
   <g class="treasure-traveler">
     <animateMotion
-      path="M 240 160 C 520 160, 760 280, 760 480 C 760 620, 360 660, 240 780 C 120 900, 500 970, 500 1100"
+      path="M 240 160 C 520 160, 760 280, 760 480 C 760 620, 360 730, 240 780 C 120 900, 500 970, 500 1100"
       dur="10s"
       repeatCount="indefinite"
     />
