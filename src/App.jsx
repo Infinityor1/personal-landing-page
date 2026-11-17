@@ -6,6 +6,7 @@ import EducationSection from "./components/EducationSection";
 import TechSection from "./components/TechSection";
 import MusicSection from "./components/MusicSection";
 import VenturesSection from "./components/VenturesSection";
+import { Analytics } from "@vercel/analytics/react";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -164,6 +165,7 @@ function App() {
           </p>
         </div>
       </footer>
+      <Analytics />
     </>
   );
 }
